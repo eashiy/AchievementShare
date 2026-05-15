@@ -1,0 +1,26 @@
+<GuiXml>
+	<Controls>
+		<!-- Parent TLC -->
+		<TopLevelControl name="AchievementExportWindow">
+			<Dimensions x="200" y="50"/>
+			<Anchor point="CENTER"/>
+			<OnUpdate>
+				<!-- function here -->
+			</OnUpdate>
+			<OnInitialized>
+				
+			</OnInitialized>
+
+			<!-- Main Window -->
+			<Control name="AchievementExportWindowBody" resizeToFitDescendents="true" hidden="false" virtual="true">
+				<Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop" />
+				<Controls name="header">
+					<Label name="AchievementExportWindowHeader" font="ZoFontWindowTitle" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="CENTER" text="Achievement Share"/>
+				</Controls>
+				<Controls name="AchievementList">
+
+				</Controls>
+			</Control>
+		</TopLevelControl>	
+	</Controls>
+</GuiXml>
