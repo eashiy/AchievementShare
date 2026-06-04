@@ -1,12 +1,9 @@
-## Title: "Achievement Export"
+## Title: "Achievement Share"
 ## Author: @Eashi 
 ## API Version: 101047
 ## Version: BETA 0.1
 ## IsLibrary: False
+## DependsOn: 
 
-
-
-
-AchievementExport.lua 
-AchievementExport.xml
-
+AchievementShare.xml
+AchievementShare.lua

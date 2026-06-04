@@ -1,26 +1,158 @@
 <GuiXml>
 	<Controls>
-		<!-- Parent TLC -->
-		<TopLevelControl name="AchievementExportWindow">
-			<Dimensions x="200" y="50"/>
+		<!-- Parent TLC, just dont go chasing waterfalls.-->
+		<TopLevelControl name="AchievementShareWindow" mouseEnabled="true" movable="true" clampedToScreen="true" hidden="true" resizeToFitDescendents="true">
+			<Dimensions x="600" y="200"/>
 			<Anchor point="CENTER"/>
-			<OnUpdate>
-				<!-- function here -->
-			</OnUpdate>
-			<OnInitialized>
+
+			<Controls>
+				<!-- Main Window -->
+				<Control name="AchievementShareWindowHeader" >
+					<AnchorFill/>
+					<Controls>
+						<Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+						<Button name="AchievementShareWindowClose" tier="HIGH" inherits="ZO_ButtonBehaviorClickSound">
+							<Dimensions x="40" y="40"/>
+							<Anchor point="TOPRIGHT" relativeTo="$(parent)" relativePoint = "TOPRIGHT" offsetY="5" offsetX="10"/>
+							<Textures normal="EsoUI/Art/Buttons/closebutton_up.dds"
+								pressed="EsoUI/Art/Buttons/closebutton_down.dds"
+								mouseOver="EsoUI/Art/Buttons/closebutton_mouseover.dds"
+								disabled="EsoUI/Art/Buttons/closebutton_disabled.dds"
+							/>
+							<OnClicked>
+								AchievementShare.toggleASwindow()
+							</OnClicked>
+						</Button>
+						<Label name="AchievementShareWindowHeaderTitle" font="ZoFontAnnounceMedium" Color="CFDCBD" text="Achievement Share">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="TOPLEFT" />
+						</Label>
+						<Control name="$(parent)FilterDrop" inherits="ZO_ComboBox" tier="HIGH" hidden="false">
+							<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" offsetX="-40" offsetY="2.5" />
+							<Dimensions x="220"/>
+							<OnInitialized>
+								local comboBox = ZO_ComboBox:New(self)
+								comboBox:SetSortsItems(true)
+								self.drodownObject = comboBox
+							</OnInitialized>
+						</Control>
+						<Texture name="$(parent)TopDivider" textureFile="/esoui/art/campaign/campaignbrowser_divider_short.dds" tier="HIGH">
+							<Dimensions x="600" y="4"/>
+							<Anchor point="TOP" relativeTo="$(parent)" offsetY="38" />
+						</Texture>
+					</Controls>
+				</Control>
+				-- Dungeons
+				<Control name="AchievementListDungeons" hidden="true">
+					<Anchor point="TOPLEFT" relativeTo="AchievementShareWindowHeader"/>
+					<Controls>
+						<Label name="$(parent)Title"font="$(MEDIUM_FONT)|$(KB_20)" horizontalAlignment="CENTER" text="Dungeons">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="42" />
+						</Label>
+						-- Tabs
+						<Control name="DungeonTabs" inherits="ZO_LabelButtonBar">
+							<Anchor point="TOPLEFT" relativeTo="AchievementShareWindowHeader"/>
+							<!-- <Controls>
+								<Label name="$(parent)Challenger"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Challenger">
+									<Anchor point="TOPLEFT" relativeTo="AchievementListDungeons" offsetY="42" offsetX = "100"/>
+								</Label>
+								<Label name="$(parent)Slayer"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Slayer">
+									<Anchor point="TOPLEFT" relativeTo="AchievementListDungeons" offsetY="42" offsetX = "190"/>
+								</Label>
+								<Label name="$(parent)Side"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Side Achievements">
+									<Anchor point="TOPLEFT" relativeTo="AchievementListDungeons" offsetY="42" offsetX = "250"/>
+								</Label>
+							</Controls> -->
+						</Control>
+						<Control name="TabDungeonChallenger" verticalAlignment="LEFT">
+							<Anchor point="TOPLEFT" relativeTo="AchievementShareWindowHeader"/>
+							<Controls>
+								-- Challenger Achievements
+								<Label name="$(parent)ContentName"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Content Name">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="70"/>
+									<Dimensions y="30" />
+								</Label>
+								<Label name="$(parent)NormClear"font="$(MEDIUM_FONT)|$(KB_18)"   horizontalAlignment="CENTER">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)ContentName" offsetY="50" offsetX="5" />
+									<Dimensions x="50" y="30" />
+								</Label>
+								<Label name="$(parent)VetClear" horizontalAlignment="CENTER">
+									<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Name" />
+									<Dimensions x="50" y="30" />
+								</Label>
+								<Label name="$(parent)HardMode" horizontalAlignment="CENTER">
+									<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Name" />
+									<Dimensions x="50" y="30" />
+								</Label>
+								<Label name="$(parent)Speed" horizontalAlignment="CENTER">
+									<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Name" />
+									<Dimensions x="50" y="30" />
+								</Label>
+								<Label name="$(parent)NoDeath" horizontalAlignment="CENTER">
+									<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Name" />
+									<Dimensions x="50" y="30" />
+								</Label>
+								<Label name="$(parent)Tri" horizontalAlignment="CENTER">
+									<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Name" />
+									<Dimensions x="50" y="30" />
+								</Label>
+							</Controls>
+						</Control>
+						<Control name="TabDungeonSlayer">
+							<Controls>
+								<Label name="$(parent)DungeonSlayer"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Slayer">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="0"/>
+									<Dimensions x="150" y="30" />
+								</Label>
+							</Controls>
+						</Control>
+						<Control name="TabDungeonSide">
+							<Controls>
+								<Label name="$(parent)DungoenSide"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Side">
+									<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="0"/>
+									<Dimensions x="150" y="30" />
+								</Label>
+							</Controls>
+						</Control>
+					</Controls>
+				</Control>
+				-- Trials
+				<Control name="AchievementListTrials" font="$(MEDIUM_FONT)|$(KB_18)" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="LEFT" hidden="true" text="Trials Achievements" relativeTo="$(parent)">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="50"/>
+					<Controls>
+						<Label name="$(parent)Title"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Trials">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="42" />
+						</Label>
+					</Controls>
+				</Control>
+				-- Arenas
+				<Control name="AchievementListArenas" font="$(MEDIUM_FONT)|$(KB_18)" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="LEFT" hidden="true" text="Trials Achievements">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="50"/>
+					<Controls>
+						<Label name="$(parent)Title"font="$(MEDIUM_FONT)|$(KB_18)"   horizontalAlignment="CENTER" text="Arenas">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="42" />
+						</Label>
+					</Controls>
+				</Control>
+				-- Night Market
+				<Control name="AchievementListNightMarket" font="$(MEDIUM_FONT)|$(KB_18)" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="LEFT" hidden="true" text="Trials Achievements">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="50"/>
+					<Controls>
+						<Label name="$(parent)Title"font="$(MEDIUM_FONT)|$(KB_18)" horizontalAlignment="CENTER" text="Night Market">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="42" />
+						</Label>
+					</Controls>
+				</Control>
+				-- Anniversary/Other
+				<Control name="AchievementListAnniversary" font="$(MEDIUM_FONT)|$(KB_18)" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="LEFT" hidden="true" text="Trials Achievements">
+					<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="50"/>
+					<Controls>
+						<Label name="$(parent)Title"font="$(MEDIUM_FONT)|$(KB_18)"   horizontalAlignment="CENTER" text="Anniversary">
+							<Anchor point="TOPLEFT" relativeTo="$(parent)" offsetY="42" />
+						</Label>
+					</Controls>
+				</Control>
 				
-			</OnInitialized>
-
-			<!-- Main Window -->
-			<Control name="AchievementExportWindowBody" resizeToFitDescendents="true" hidden="false" virtual="true">
-				<Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop" />
-				<Controls name="header">
-					<Label name="AchievementExportWindowHeader" font="ZoFontWindowTitle" Color="CFDCBD" wrapMode="ELLPSIS" verticalAlignment="CENTER" text="Achievement Share"/>
-				</Controls>
-				<Controls name="AchievementList">
-
-				</Controls>
-			</Control>
+			</Controls>
 		</TopLevelControl>	
 	</Controls>
 </GuiXml>
