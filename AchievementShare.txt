@@ -2,8 +2,10 @@
 ## Author: @Eashi 
 ## API Version: 101047
 ## Version: BETA 0.1
+## Description: Tracks and shares achievements in your group
 ## IsLibrary: False
-## DependsOn: 
+## DependsOn: Raidificator
 
 AchievementShare.xml
 AchievementShare.lua
+AS_Achievement_IDs.lua
